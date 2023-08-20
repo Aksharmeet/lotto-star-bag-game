@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lotto Star - Game</title>
+  <link rel="stylesheet" href="reset.css">
+  <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+  <div id="iframe-container">
+    <iframe id="background-iframe"
+      src="https://www.youtube.com/embed/VHksFlD7kQI?vq=hd2160&disablekb=0&loop=1&enablejsapi=0&fs=0&autoplay=1&mute=1&color=white&controls=0&modestbranding=0&playsinline=0&rel=0&enablejsapi=0"
+      title="YouTube video player" frameborder="0" allow="autoplay" allowfullscreen="true" webkitallowfullscreen="true"
+      mozallowfullscreen="true">
+    </iframe>
+
+
+  </div>
+
+  <section class="modal-wrapper" id="get-user-data">
+    <div class="modal-wrapper_overlay"></div>
+    <div class="modal modal_container">
+      <div class="modal_gradient-border user-data">
+
+        <form class="user-data_form" onsubmit="submitNameHandler(event)">
+          <p>Please Enter your name</p>
+          <input type="text" placeholder="Enter your name" id="user-name-input" />
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- * User Data Screen -->
+  <section class="user-container_container">
+    <div class="user-container">
+      <div class="user-container_avatar-container">
+        <img src="/assets/avatar.svg" />
+      </div>
+      <div class="user-container_info-container">
+        <p id="user-name"></p>
+        <p id="total-amount-won"><span>Amount Won: R</span> 0</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- * Loading Screen -->
+  <section class="loading_section">
+    <div class="modal-wrapper_overlay">
+      <div class="modal svg_container">
+        <svg viewBox="0 0 100 100">
+          <g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="6">
+
+            <path d="M 21 40 V 59">
+              <animateTransform attributeName="transform" attributeType="XML" type="rotate" values="0 21 59; 180 21 59"
+                dur="2s" repeatCount="indefinite" />
+            </path>
+
+            <path d="M 79 40 V 59">
+              <animateTransform attributeName="transform" attributeType="XML" type="rotate" values="0 79 59; -180 79 59"
+                dur="2s" repeatCount="indefinite" />
+            </path>
+
+            <path d="M 50 21 V 40">
+              <animate attributeName="d" values="M 50 21 V 40; M 50 59 V 40" dur="2s" repeatCount="indefinite" />
+            </path>
+
+            <path d="M 50 60 V 79">
+              <animate attributeName="d" values="M 50 60 V 79; M 50 98 V 79" dur="2s" repeatCount="indefinite" />
+            </path>
+
+            <path d="M 50 21 L 79 40 L 50 60 L 21 40 Z">
+              <animate attributeName="stroke" values="rgba(255,255,255,1); rgba(100,100,100,0)" dur="2s"
+                repeatCount="indefinite" />
+            </path>
+
+            <path d="M 50 40 L 79 59 L 50 79 L 21 59 Z" />
+
+            <path d="M 50 59 L 79 78 L 50 98 L 21 78 Z">
+              <animate attributeName="stroke" values="rgba(100,100,100,0); rgba(255,255,255,1)" dur="2s"
+                repeatCount="indefinite" />
+            </path>
+            <animateTransform attributeName="transform" attributeType="XML" type="translate" values="0 0; 0 -19"
+              dur="2s" repeatCount="indefinite" />
+          </g>
+        </svg>
+        <p>Just a sec... Summoning the game gods for luck!"</p>
+      </div>
+  </section>
+
+  <!-- * audio -->
+  <audio id="default" src="/public/assets/sounds/default.mp3" loop="true"></audio>
+  <audio id="dramatic" src="/public/assets/sounds/dramatic.mp3"></audio>
+  <audio id="select-audio" src="/public/assets/sounds/select.mp3"></audio>
+  <div>
+    <button onclick="playDefaultMusic()" style="background: rgba(0,0,0,.0); border: 0">
+      <img src="/public/assets/svg/sound-mute.svg" alt="mute" width="30px" height="30px" color="#fff"
+        id="sound-image" />
+    </button>
+  </div>
+
+  <!-- * show wins -->
+  <video autoplay muted loop id="show-wins-bg-video" class="hidden">
+    <source src="/public/assets/video/confetti.mp4" type="video/mp4">
+    Your browser does not support HTML5 video.
+  </video>
+
+  <section class="modal animate-slide-left-start" id="show-wins">
+    <div class="modal-wrapper_overlay_container">
+      <div class=" modal">
+        <div class="modal_gradient-border">
+          <p class="modal_selected-bag-wrapper">
+            You selected bag <span class='modal_selected-bag-wrapper_selected-bag-text'></span>
+          </p>
+          <img src="/assets/breifcase-open.png" width="140px" />
+          <div>
+
+            <p class="modal_you_have_won_text">
+              You have won
+            </p>
+            <span class="modal_selected-bag-wrapper">R
+              <p class="modal_selected-bag-value"></p>
+            </span>
+
+            <button class="modal_reset-btn_bottom" onclick="resetGame()">
+              Replay Game <img src="/assets/circle-arrow.svg" width="15px" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <main id="content">
+
+
+    <!-- * Game -->
+    <section class="game-wrapper">
+      <div class="bag-container">
+        <div class="bag-container_wrapper">
+          <div class="bag-container_inner-container" id="one" onclick='playDramaticMusic()'>
+            <img src="/assets/breifcase-closed.png" width="140px" />
+            <p class='bag-container_inner-container_number'><span class='hashes'>#</span>01</p>
+          </div>
+          <div class="bag-container_inner-container" id="two" onclick='playDramaticMusic()'>
+            <img src="/assets/breifcase-closed.png" width="140px" />
+            <p class='bag-container_inner-container_number'><span class='hashes'>#</span>02</p>
+          </div>
+          <div class="bag-container_inner-container" id="three" onclick='playDramaticMusic()'>
+            <img src="/assets/breifcase-closed.png" width="140px" />
+            <p class='bag-container_inner-container_number'><span class='hashes'>#</span>03</p>
+          </div>
+          <div class="bag-container_inner-container" id="four" onclick='playDramaticMusic()'>
+            <img src="/assets/breifcase-closed.png" width="140px" />
+            <p class='bag-container_inner-container_number'><span class='hashes'>#</span>04</p>
+          </div>
+          <div class="bag-container_inner-container" id="five" onclick='playDramaticMusic()'>
+            <img src="/assets/breifcase-closed.png" width="140px" />
+            <p class='bag-container_inner-container_number'><span class='hashes'>#</span>05</p>
+          </div>
+          <div class="bag-container_inner-container" id="six" onclick='playDramaticMusic()'>
+            <img src="/assets/breifcase-closed.png" width="140px" />
+            <p class='bag-container_inner-container_number'><span class='hashes'>#</span>06</p>
+          </div>
+          <div class="bag-container_inner-container" id="seven" onclick='playDramaticMusic()'>
+            <img src="/assets/breifcase-closed.png" width="140px" />
+            <p class='bag-container_inner-container_number'><span class='hashes'>#</span>07</p>
+          </div>
+          <div class="bag-container_inner-container" id="eight" onclick='playDramaticMusic()'>
+            <img src="/assets/breifcase-closed.png" width="140px" />
+            <p class='bag-container_inner-container_number'><span class='hashes'>#</span>08</p>
+          </div>
+          <div class="bag-container_inner-container" id="nine" onclick='playDramaticMusic()'>
+            <img src="/assets/breifcase-closed.png" width="140px" />
+            <p class='bag-container_inner-container_number'><span class='hashes'>#</span>09</p>
+          </div>
+          <div class="bag-container_inner-container" id="ten" onclick='playDramaticMusic()'>
+            <img src="/assets/breifcase-closed.png" width="140px" />
+            <p class='bag-container_inner-container_number'><span class='hashes'>#</span>10</p>
+          </div>
+          <div class="bag-container_inner-container" id="eleven" onclick='playDramaticMusic()'>
+            <img src="/assets/breifcase-closed.png" width="140px" />
+            <p class='bag-container_inner-container_number'><span class='hashes'>#</span>11</p>
+          </div>
+          <div class="bag-container_inner-container" id="twelve" onclick='playDramaticMusic()'>
+            <img src="/assets/breifcase-closed.png" width="140px" />
+            <p class='bag-container_inner-container_number'><span class='hashes'>#</span>12</p>
+          </div>
+          <div class="bag-container_inner-container" id="thirteen" onclick='playDramaticMusic()'>
+            <img src="/assets/breifcase-closed.png" width="140px" />
+            <p class='bag-container_inner-container_number'><span class='hashes'>#</span>13</p>
+          </div>
+          <div class="bag-container_inner-container" id="fourteen" onclick='playDramaticMusic()'>
+            <img src="/assets/breifcase-closed.png" width="140px" />
+            <p class='bag-container_inner-container_number'><span class='hashes'>#</span>14</p>
+          </div>
+          <div class="bag-container_inner-container" id="fifteen" onclick='playDramaticMusic()'>
+            <img src="/assets/breifcase-closed.png" width="140px" />
+            <p class='bag-container_inner-container_number'><span class='hashes'>#</span>15</p>
+          </div>
+          <div class="bag-container_inner-container" id="sixteen" onclick='playDramaticMusic()'>
+            <img src="/assets/breifcase-closed.png" width="140px" />
+            <p class='bag-container_inner-container_number'><span class='hashes'>#</span>16</p>
+          </div>
+          <button class="reveal-button" onclick="revealSelectedBagValue()" id="reveal-button" disabled> Reveal
+            Selected Bag</button>
+        </div>
+
+      </div>
+      <div class="selected-container">
+        <div class="selected-container_inner-container " id="user-selected" onclick="selectBag(event)">
+          <div class='selected-container_inner-container_info-text-container user-select-none'>
+            <p style='color:#fff'>GO WITH YOUR GUT</p>
+          </div>
+          <div class="user-select-none">
+            <img src="/assets/breifcase-closed.png" width="140px" />
+            <p class='selected-container_inner-container_number'><span class='hashes'>#</span></p>
+          </div>
+        </div>
+        <div class="selected-container_inner-container" id="randomly-selected" onclick="selectBag(event)">
+          <div class='selected-container_inner-container_info-text-container user-select-none'>
+            <p style='color:#fff' class="selected-container_inner-container_info-text">TEST YOUR LUCK</p>
+          </div>
+          <div class="user-select-none">
+            <img src="/assets/breifcase-closed.png" width="140px" />
+            <p class='selected-container_inner-container_number'><span class='hashes'>#</span></p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+    <section>
+
+    </section>
+
+
+  </main>
+  <script src="main.js"></script>
+
+</body>
+
+
+</html> 
