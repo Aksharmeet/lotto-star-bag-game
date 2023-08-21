@@ -3,11 +3,13 @@ const userSelected = document.getElementById('user-selected')
 const randomlySelected = document.getElementById('randomly-selected')
 const selectedBag = document.querySelector('.selected-bag')
 
-// * ----------------------------------->> check if user name is present in local storage
+let randomSelectTimer
+let tempSelectTimer
+let tempSelectTimer2
+
 const user = localStorage.getItem('userName')
 const amountWon = localStorage.getItem('totalAmountWon')
 
-// ----------------------------------->> if user name is present in local storage then show the user name in the header
 if (user) {
 	const userName = document.querySelector('#user-name')
 	userName.innerHTML = user
@@ -15,7 +17,7 @@ if (user) {
 	const modal = document.querySelector('#get-user-data')
 	modal.classList.add('hidden')
 }
-// ----------------------------------->> if amount won is present in local storage then show the amount won in the header
+
 if (amountWon) {
 	const totalAmountWonElement = document.querySelector('#total-amount-won')
 	totalAmountWonElement.innerHTML = `Amount Won R: ${localStorage.getItem('totalAmountWon')}`
@@ -23,40 +25,41 @@ if (amountWon) {
 
 document.addEventListener('DOMContentLoaded', function () {
 	bagContainers.forEach((bag) => {
-		const randomValue = Math.floor(Math.random() * 250000) + 500
+		let randomValue
+		do {
+			randomValue = Math.floor(Math.random() * 250001) + 500
+		} while (randomValue > 250000)
 		bag.setAttribute('data-value', randomValue)
 	})
 
 	let selectedBagId = null
-	let timer
 	let loading = false
-	let bagSelected = false // Flag to prevent further selections
+	let bagSelected = false
 
-	// Add this condition to prevent execution when elements are still loading
 	if (!loading) {
 		bagContainers.forEach(function (bagContainer) {
 			bagContainer.addEventListener('click', function () {
-				if (bagSelected) return // If bag is already selected, do nothing
-				clearTimeout(timer) // Clear the previous timer (if any)
-				bagSelected = true // Set the flag to true
+				if (bagSelected) return
+
+				clearTimeout(randomSelectTimer)
+				clearTimeout(tempSelectTimer)
+				clearTimeout(tempSelectTimer2)
+
+				bagSelected = true
 				loading = true
-				// Remove .active class from all bags
+
 				bagContainers.forEach(function (bag) {
 					bag.classList.remove('active')
 				})
 
-				// Add .active class to the clicked bag
 				bagContainer.classList.add('active')
 				selectedBagId = bagContainer.getAttribute('id')
 
-				// add text inside already existing p tag inside userSelected div
 				userSelected.querySelector('.selected-container_inner-container_number').innerHTML = `#${convertStringsToNum(selectedBagId)}`
 
-				// add data-value attribute to userSelected div
 				userSelected.setAttribute('data-value', bagContainer.getAttribute('data-value'))
 				userSelected.style.display = 'block'
 
-				// Add .active class to a different random bag
 				let randomBagId
 
 				do {
@@ -70,18 +73,17 @@ document.addEventListener('DOMContentLoaded', function () {
 						if (!randomBag.classList[1]) {
 							const tempActiveBag = document.getElementById(convertNumToStrings(i))
 
-							setTimeout(() => {
+							tempSelectTimer = setTimeout(() => {
 								tempActiveBag.classList.add('tempActive')
-								setTimeout(() => {
+								tempSelectTimer2 = setTimeout(() => {
 									tempActiveBag.classList.remove('tempActive')
 								}, 200)
-							}, 200 * (i + 16 * j)) // Adjust the delay for the second run
+							}, 200 * (i + 16 * j))
 						}
 					}
 				}
 
-				// Start the timer for 10 seconds
-				timer = setTimeout(function () {
+				randomSelectTimer = setTimeout(function () {
 					if (randomBag) {
 						randomBag.classList.add('active')
 						randomlySelected.querySelector('.selected-container_inner-container_number').innerHTML = `#${randomBagId}`
@@ -90,14 +92,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
 						loading = false
 					}
-					bagSelected = false // Reset the flag after selection is completed
+					bagSelected = false
 				}, 6500)
 			})
 		})
 	}
 })
-
-// set a random value from 500 to 250000 for each bag on dom load and save them for later use
 
 const revealSelectedBagValue = () => {
 	const selectedBag = document.querySelector('.selected-bag')
@@ -106,6 +106,7 @@ const revealSelectedBagValue = () => {
 		alert('Please select a bag first')
 		return
 	}
+
 	const player = document.getElementById('show-wins-bg-video')
 	player.play()
 	player.classList.remove('hidden')
@@ -120,7 +121,6 @@ const revealSelectedBagValue = () => {
 	const transitionAudio = document.getElementById('transition-audio')
 	transitionAudio.play()
 
-	// add the value of the selected bag in the  total amount won in local storage
 	const totalAmountWon = localStorage.getItem('totalAmountWon')
 	if (totalAmountWon) {
 		localStorage.setItem('totalAmountWon', parseInt(totalAmountWon) + parseInt(selectedBagValue))
@@ -130,11 +130,9 @@ const revealSelectedBagValue = () => {
 	const totalAmountWonElement = document.querySelector('#total-amount-won')
 	totalAmountWonElement.innerHTML = `Amount Won R: ${localStorage.getItem('totalAmountWon')}`
 
-	// get the number of the selected bag
 	const selectedBagTextElement = document.querySelector('.modal_selected-bag-wrapper_selected-bag-text')
 	selectedBagTextElement.innerHTML = selectedBag.querySelector('.selected-container_inner-container_number').innerHTML
 
-	// set the value of the selected bag in the modal
 	const selectedBagValueElement = document.querySelector('.modal_selected-bag-value')
 	selectedBagValueElement.innerHTML = selectedBagValue
 
@@ -142,45 +140,52 @@ const revealSelectedBagValue = () => {
 	selectedModal.classList.add('animate-slide-left-end')
 }
 
-// * ----------------------------------->> select bag
 const selectBag = (event) => {
-	if (event.target.getAttribute('data-value')) {
-		const selectedBag = document.querySelector('.selected-bag')
+	if (userSelected.getAttribute('data-value') !== null && randomlySelected.getAttribute('data-value') !== null) {
+		if (event.target.getAttribute('data-value')) {
+			const selectedBag = document.querySelector('.selected-bag')
 
-		// play audio
-		const player = document.getElementById('select-audio')
-		// if player is already playing stop it and play again
-		if (player.currentTime > 2) {
-			player.pause()
+			const player = document.getElementById('select-audio')
+			if (player.currentTime > 2) {
+				player.pause()
+			}
+			player.play()
+
+			const revealButton = document.querySelector('#reveal-button')
+
+			revealButton.classList.add('reveal-button-animate')
+			revealButton.removeAttribute('disabled')
+
+			if (selectedBag) {
+				selectedBag.classList.remove('selected-bag')
+			}
+
+			event.target.classList.add('selected-bag')
 		}
-		player.play()
-
-		// ----------------------------->> reveal button effects
-		const revealButton = document.querySelector('#reveal-button')
-
-		revealButton.classList.add('reveal-button-animate')
-		revealButton.removeAttribute('disabled')
-
-		// remove selected-bag class from all element
-		if (selectedBag) {
-			selectedBag.classList.remove('selected-bag')
-		}
-		// add selected-bag class to the clicked element
-		event.target.classList.add('selected-bag')
 	}
 }
 
-// * ----------------------------------->>  reset game
 const resetGame = () => {
-	// ----------------------------->> currently selected bag
 	const selectedBag = document.querySelector('.selected-bag')
 	selectedBag.classList.remove('selected-bag')
 
 	bagContainers.forEach((bag) => {
 		bag.classList.remove('active')
 	})
+
+	userSelected.querySelector('.selected-container_inner-container_number').innerHTML = `#`
+	userSelected.removeAttribute('data-value')
+
+	randomlySelected.querySelector('.selected-container_inner-container_number').innerHTML = `#`
+	randomlySelected.removeAttribute('data-value')
+
 	const player = document.getElementById('show-wins-bg-video')
 	player.classList.add('opacity-hidden')
+
+	clearTimeout(randomSelectTimer)
+	clearTimeout(tempSelectTimer)
+	clearTimeout(tempSelectTimer2)
+
 	setTimeout(() => {
 		player.classList.add('hidden')
 	}, 1000)
@@ -191,17 +196,14 @@ const resetGame = () => {
 	const transitionAudio = document.getElementById('transition-audio')
 	transitionAudio.play()
 
-	// ----------------------------->> reveal button
 	const revealButton = document.querySelector('#reveal-button')
 	revealButton.setAttribute('disabled', true)
 	revealButton.classList.remove('reveal-button-animate')
 
-	// ----------------------------->> modal
 	const modal = document.querySelector('#show-wins')
 	modal.classList.remove('animate-slide-left-end')
 }
 
-// * ----------------------------------->>  convert numbers to strings
 const convertNumToStrings = (num) => {
 	switch (num) {
 		case 1:
@@ -236,9 +238,8 @@ const convertNumToStrings = (num) => {
 			return 'fifteen'
 		case 16:
 			return 'sixteen'
-
 		default:
-			''
+			return ''
 	}
 }
 
@@ -277,11 +278,10 @@ const convertStringsToNum = (num) => {
 		case 'sixteen':
 			return 16
 		default:
-			''
+			return ''
 	}
 }
 
-// * ----------------------------------->> Loading Screen Animation
 const removeLoadingSection = () => {
 	const loadingSection = document.querySelector('.loading_section')
 	loadingSection.classList.add('hidden')
@@ -289,7 +289,6 @@ const removeLoadingSection = () => {
 
 setTimeout(removeLoadingSection, 5000)
 
-// * ----------------------------------->>  submit name
 const submitNameHandler = (e) => {
 	e.preventDefault()
 	const name = document.querySelector('#user-name-input').value
@@ -304,7 +303,6 @@ const submitNameHandler = (e) => {
 	modal.classList.add('hidden')
 }
 
-// * ----------------------------------->>  logoutUser
 const logoutUser = () => {
 	localStorage.removeItem('userName')
 	localStorage.removeItem('totalAmountWon')
@@ -314,23 +312,19 @@ const logoutUser = () => {
 
 const playDefaultMusic = () => {
 	const soundButtonImage = document.getElementById('sound-image')
-
 	const player = document.getElementById('default')
 	player.volume = 0.05
 
-	// * ----------------------------------->>  play music
 	const playMusic = () => {
 		player.play()
 		soundButtonImage.src = 'assets/svg/sound-max.svg'
 	}
 
-	// * ----------------------------------->>  pause music
 	const pauseMusic = () => {
 		player.pause()
 		soundButtonImage.src = 'assets/svg/sound-mute.svg'
 	}
 
-	// * ----------------------------------->>  toggle music
 	if (player.paused) {
 		playMusic()
 	} else {

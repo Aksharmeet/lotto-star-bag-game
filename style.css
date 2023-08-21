@@ -33,7 +33,9 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     height: 80%;
+    padding-bottom: 5px
 
 }
     
@@ -356,11 +358,13 @@ body{
 }
 .selected-container_inner-container_info-text-container{
     position: relative;
-    padding-block: .3vw;
+    padding: .5vw;
     border-bottom: 2px solid #750cf2;
     background-color: #020117;
     border-radius: .4vw .4vw 0 0;
     font-size: 1vw;
+    display: flex;
+    justify-content: space-between;
 }
 
 .selected-container_inner-container img{
@@ -368,15 +372,12 @@ body{
     cursor: pointer;
 }
 .selected-container_inner-container_number{
-    font-size: 1.5vw;
-    font-weight: 700;
-    position: absolute;
-    top: 10vw;
-    right:0;
-    left:0;
-    color:var(--primary-color);
+    font-size: 1vw;
+    color: #fff;
     user-select: none;
     cursor: pointer;
+    border-radius: 20px;
+    padding:0 3px;
 }
 
 .selected-container_inner-container .hashes{
@@ -384,54 +385,21 @@ body{
     font-weight: 800;
     position: relative;
     bottom: 8px;
+   
 }
 .selected-bag{
     background: var(--red-bg-gradient);
-    border-radius: .6vw;
-}
-.selected-bag img{
-    width:28vw; 
-}
-.selected-bag .selected-container_inner-container_number{
-    font-size: 2.2vw;
-    font-weight: 700;
-    position: absolute;
-    top: 14.5vw;
-    right:0;
-    left:0;
-    color:var(--primary-color);
-    user-select: none;
-    cursor: pointer;
+
 }
 
-@media screen and (max-width: 840px) {
-    .selected-container_inner-container_number{
-    font-size: 1.5vw;
-    top: 14.5vw;
-    }
-    .selected-bag .selected-container_inner-container_number{
-        top: 15vw;
-    }
-    
+/* .selected-bag .selected-container_inner-container_number{
+    font-size: 1vw;
 }
-@media screen and (max-width: 768px) {
-    .selected-container_inner-container_number{
-    top: 15.5vw;
-    } 
-}
-@media screen and (max-width: 480px) {
-    .selected-container_inner-container_number{
-    top: 17vw;
-    } 
-    .selected-bag .selected-container_inner-container_number{
-        top: 17vw;
-    }
-}
-@media screen and (max-width: 380px) {
-    .selected-container_inner-container_number{
-    top: 19vw;
-    } 
-}
+.selected-bag  .selected-container_inner-container_info-text-container{
+    font-size: 1.2vw;
+} */
+
+
 
 /** Reveal Button */
 .reveal-button{
@@ -617,7 +585,7 @@ body{
     opacity: 0;
 }
 .animate-slide-left-end{
-    transition: all .3s ease-in-out;
+    transition: all .6s ease-in-out;
     top: 0;
     opacity: 1;
 }
@@ -629,6 +597,7 @@ body{
     object-position: center;
     transition: all .6s ease-in-out;
   }
+  
   .opacity-hidden{
     opacity: 0;
   }
