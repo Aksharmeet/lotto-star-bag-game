@@ -64,13 +64,12 @@ body{
     justify-content: center;
     flex-direction: column;
     height: 100vh;
-    top: -40px
+
 }
 
 /** ----------------- modal: start----------------- */
 .modal-wrapper_overlay{
     position: absolute;
-    top:-40px;
     left:0;
     right:0;
     width: 100vw;
@@ -232,6 +231,7 @@ body{
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+    padding-bottom: 10px;
 }
 .bag-container_wrapper{
     width: 41vw;
@@ -378,6 +378,7 @@ body{
     user-select: none;
     cursor: pointer;
 }
+
 .selected-container_inner-container .hashes{
     font-size: .8vw;
     font-weight: 800;
@@ -436,14 +437,19 @@ body{
 .reveal-button{
     padding: 10px 20px;
     border:0;
-    width: 100%;
-    background:  linear-gradient(45deg,  #00153c6b, #3600786c);
-    border-top: 1px solid #750cf2;
-    color: #ffffff60;
+    width: 50%;
+    background:  linear-gradient(45deg,  #d84430, #debd3a);
+    border-bottom: 1px solid #fb1d00;
+    border-right: 1px solid #fb1d00;
+    color: #ffffff;
     font-size: 1.2vw;
     cursor: pointer;
     margin-top: 1vw;
     margin-bottom: 0;
+    border-radius:40px;
+}
+.reveal-button:disabled{
+    cursor: not-allowed;
 }
 @media screen and (max-width: 960px) {
     .reveal-button{
@@ -457,11 +463,14 @@ body{
     }  
 }
 .reveal-button-animate{
-background:  linear-gradient(45deg,  #00153c, #360078);
-color: #ffffff;
+    background:  linear-gradient(45deg,  #c71e07, #deb410);
+    color: #ffffff;
 }
 .reveal-button-animate:hover{
-    background:  linear-gradient(45deg,  #01205b, #430194);
+    background:   linear-gradient(45deg,  #e32107, #f2c306);
+}
+.reveal-button-animate:active{
+    transform: scale(.9);
 }
 
 /** Reveal Button Ends */

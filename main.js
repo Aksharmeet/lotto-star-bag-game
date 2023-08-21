@@ -88,12 +88,6 @@ document.addEventListener('DOMContentLoaded', function () {
 						randomlySelected.setAttribute('data-value', randomBag.getAttribute('data-value'))
 						randomlySelected.style.display = 'block'
 
-						const revealButton = document.querySelector('#reveal-button')
-						revealButton.removeAttribute('disabled')
-
-						// ----------------------------->> reveal button effects
-						revealButton.classList.add('reveal-button-animate')
-
 						loading = false
 					}
 					bagSelected = false // Reset the flag after selection is completed
@@ -150,21 +144,30 @@ const revealSelectedBagValue = () => {
 
 // * ----------------------------------->> select bag
 const selectBag = (event) => {
-	const selectedBag = document.querySelector('.selected-bag')
-	// play audio
-	const player = document.getElementById('select-audio')
-	// if player is already playing stop it and play again
-	if (player.currentTime > 2) {
-		player.pause()
-	}
-	player.play()
+	if (event.target.getAttribute('data-value')) {
+		const selectedBag = document.querySelector('.selected-bag')
 
-	// remove selected-bag class from all element
-	if (selectedBag) {
-		selectedBag.classList.remove('selected-bag')
+		// play audio
+		const player = document.getElementById('select-audio')
+		// if player is already playing stop it and play again
+		if (player.currentTime > 2) {
+			player.pause()
+		}
+		player.play()
+
+		// ----------------------------->> reveal button effects
+		const revealButton = document.querySelector('#reveal-button')
+
+		revealButton.classList.add('reveal-button-animate')
+		revealButton.removeAttribute('disabled')
+
+		// remove selected-bag class from all element
+		if (selectedBag) {
+			selectedBag.classList.remove('selected-bag')
+		}
+		// add selected-bag class to the clicked element
+		event.target.classList.add('selected-bag')
 	}
-	// add selected-bag class to the clicked element
-	event.target.classList.add('selected-bag')
 }
 
 // * ----------------------------------->>  reset game
@@ -301,6 +304,14 @@ const submitNameHandler = (e) => {
 	modal.classList.add('hidden')
 }
 
+// * ----------------------------------->>  logoutUser
+const logoutUser = () => {
+	localStorage.removeItem('userName')
+	localStorage.removeItem('totalAmountWon')
+	const modal = document.querySelector('#get-user-data')
+	modal.classList.remove('hidden')
+}
+
 const playDefaultMusic = () => {
 	const soundButtonImage = document.getElementById('sound-image')
 
@@ -310,13 +321,13 @@ const playDefaultMusic = () => {
 	// * ----------------------------------->>  play music
 	const playMusic = () => {
 		player.play()
-		soundButtonImage.src = '/public/assets/svg/sound-max.svg'
+		soundButtonImage.src = 'assets/svg/sound-max.svg'
 	}
 
 	// * ----------------------------------->>  pause music
 	const pauseMusic = () => {
 		player.pause()
-		soundButtonImage.src = '/public/assets/svg/sound-mute.svg'
+		soundButtonImage.src = 'assets/svg/sound-mute.svg'
 	}
 
 	// * ----------------------------------->>  toggle music

@@ -102,10 +102,16 @@
   <audio id="button-audio" src="assets/sounds/click.mp3"> </audio>
   <audio id="transition-audio" src="assets/sounds/transition.mp3"> </audio>
 
-  <div>
-    <button onclick="playDefaultMusic()" style="background: rgba(0,0,0,.0); border: 0">
+  <div style="position: absolute;top:0; z-index: 100;display: flex; gap: 0px">
+    <button onclick="logoutUser()"
+      style="background: rgba(0,0,0,.0); border: 0;transform: rotateY(180deg); cursor: pointer;">
+      <img src="assets/svg/logout.svg" alt="logout icon" width="20px" height="20px" color="#fff" id="sound-image" />
+
+    </button>
+    <button onclick="playDefaultMusic()" style="background: rgba(0,0,0,.0); border: 0; cursor: pointer;">
       <img src="assets/svg/sound-mute.svg" alt="mute" width="30px" height="30px" color="#fff" id="sound-image" />
     </button>
+
   </div>
 
   <!-- * show wins -->
@@ -210,9 +216,9 @@
             <img src="/assets/breifcase-closed.png" width="140px" />
             <p class='bag-container_inner-container_number'>16</p>
           </div>
-          <button class="reveal-button" onclick="revealSelectedBagValue()" id="reveal-button" disabled> Reveal
-            Selected Bag</button>
+
         </div>
+
 
       </div>
       <div class="selected-container">
@@ -237,6 +243,8 @@
       </div>
 
     </section>
+    <button class="reveal-button" onclick="revealSelectedBagValue()" id="reveal-button" disabled> Reveal
+      Selected Bag</button>
     <section>
 
     </section>
