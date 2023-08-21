@@ -120,6 +120,12 @@ const revealSelectedBagValue = () => {
 	const audio = document.getElementById('reveal-audio')
 	audio.play()
 
+	const buttonAudio = document.getElementById('button-audio')
+	buttonAudio.play()
+
+	const transitionAudio = document.getElementById('transition-audio')
+	transitionAudio.play()
+
 	// add the value of the selected bag in the  total amount won in local storage
 	const totalAmountWon = localStorage.getItem('totalAmountWon')
 	if (totalAmountWon) {
@@ -175,6 +181,12 @@ const resetGame = () => {
 	setTimeout(() => {
 		player.classList.add('hidden')
 	}, 1000)
+
+	const buttonAudio = document.getElementById('button-audio')
+	buttonAudio.play()
+
+	const transitionAudio = document.getElementById('transition-audio')
+	transitionAudio.play()
 
 	// ----------------------------->> reveal button
 	const revealButton = document.querySelector('#reveal-button')
