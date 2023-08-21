@@ -98,6 +98,7 @@
   <audio id="default" src="assets/sounds/default.mp3" loop="true"></audio>
   <audio id="dramatic" src="assets/sounds/dramatic.mp3"></audio>
   <audio id="select-audio" src="assets/sounds/select.mp3"></audio>
+
   <div>
     <button onclick="playDefaultMusic()" style="background: rgba(0,0,0,.0); border: 0">
       <img src="assets/svg/sound-mute.svg" alt="mute" width="30px" height="30px" color="#fff" id="sound-image" />
@@ -114,11 +115,11 @@
     <div class="modal-wrapper_overlay_container">
       <div class=" modal">
         <div class="modal_gradient-border">
-          <p class="modal_selected-bag-wrapper">
+          <p class="modal_selected-bag-wrapper you-selected-text">
             You selected bag <span class='modal_selected-bag-wrapper_selected-bag-text'></span>
           </p>
-          <img src="/assets/breifcase-open.png" width="140px" />
-          <div>
+          <img src="/assets/breifcase-open.png" class="briefcase-open" />
+          <div class="modal-text-container">
 
             <p class="modal_you_have_won_text">
               You have won
@@ -144,67 +145,67 @@
         <div class="bag-container_wrapper">
           <div class="bag-container_inner-container" id="one" onclick='playDramaticMusic()'>
             <img src="/assets/breifcase-closed.png" width="140px" />
-            <p class='bag-container_inner-container_number'><span class='hashes'>#</span>01</p>
+            <p class='bag-container_inner-container_number'>01</p>
           </div>
           <div class="bag-container_inner-container" id="two" onclick='playDramaticMusic()'>
             <img src="/assets/breifcase-closed.png" width="140px" />
-            <p class='bag-container_inner-container_number'><span class='hashes'>#</span>02</p>
+            <p class='bag-container_inner-container_number'>02</p>
           </div>
           <div class="bag-container_inner-container" id="three" onclick='playDramaticMusic()'>
             <img src="/assets/breifcase-closed.png" width="140px" />
-            <p class='bag-container_inner-container_number'><span class='hashes'>#</span>03</p>
+            <p class='bag-container_inner-container_number'>03</p>
           </div>
           <div class="bag-container_inner-container" id="four" onclick='playDramaticMusic()'>
             <img src="/assets/breifcase-closed.png" width="140px" />
-            <p class='bag-container_inner-container_number'><span class='hashes'>#</span>04</p>
+            <p class='bag-container_inner-container_number'>04</p>
           </div>
           <div class="bag-container_inner-container" id="five" onclick='playDramaticMusic()'>
             <img src="/assets/breifcase-closed.png" width="140px" />
-            <p class='bag-container_inner-container_number'><span class='hashes'>#</span>05</p>
+            <p class='bag-container_inner-container_number'>05</p>
           </div>
           <div class="bag-container_inner-container" id="six" onclick='playDramaticMusic()'>
             <img src="/assets/breifcase-closed.png" width="140px" />
-            <p class='bag-container_inner-container_number'><span class='hashes'>#</span>06</p>
+            <p class='bag-container_inner-container_number'>06</p>
           </div>
           <div class="bag-container_inner-container" id="seven" onclick='playDramaticMusic()'>
             <img src="/assets/breifcase-closed.png" width="140px" />
-            <p class='bag-container_inner-container_number'><span class='hashes'>#</span>07</p>
+            <p class='bag-container_inner-container_number'>07</p>
           </div>
           <div class="bag-container_inner-container" id="eight" onclick='playDramaticMusic()'>
             <img src="/assets/breifcase-closed.png" width="140px" />
-            <p class='bag-container_inner-container_number'><span class='hashes'>#</span>08</p>
+            <p class='bag-container_inner-container_number'>08</p>
           </div>
           <div class="bag-container_inner-container" id="nine" onclick='playDramaticMusic()'>
             <img src="/assets/breifcase-closed.png" width="140px" />
-            <p class='bag-container_inner-container_number'><span class='hashes'>#</span>09</p>
+            <p class='bag-container_inner-container_number'>09</p>
           </div>
           <div class="bag-container_inner-container" id="ten" onclick='playDramaticMusic()'>
             <img src="/assets/breifcase-closed.png" width="140px" />
-            <p class='bag-container_inner-container_number'><span class='hashes'>#</span>10</p>
+            <p class='bag-container_inner-container_number'>10</p>
           </div>
           <div class="bag-container_inner-container" id="eleven" onclick='playDramaticMusic()'>
             <img src="/assets/breifcase-closed.png" width="140px" />
-            <p class='bag-container_inner-container_number'><span class='hashes'>#</span>11</p>
+            <p class='bag-container_inner-container_number'>11</p>
           </div>
           <div class="bag-container_inner-container" id="twelve" onclick='playDramaticMusic()'>
             <img src="/assets/breifcase-closed.png" width="140px" />
-            <p class='bag-container_inner-container_number'><span class='hashes'>#</span>12</p>
+            <p class='bag-container_inner-container_number'>12</p>
           </div>
           <div class="bag-container_inner-container" id="thirteen" onclick='playDramaticMusic()'>
             <img src="/assets/breifcase-closed.png" width="140px" />
-            <p class='bag-container_inner-container_number'><span class='hashes'>#</span>13</p>
+            <p class='bag-container_inner-container_number'>13</p>
           </div>
           <div class="bag-container_inner-container" id="fourteen" onclick='playDramaticMusic()'>
             <img src="/assets/breifcase-closed.png" width="140px" />
-            <p class='bag-container_inner-container_number'><span class='hashes'>#</span>14</p>
+            <p class='bag-container_inner-container_number'>14</p>
           </div>
           <div class="bag-container_inner-container" id="fifteen" onclick='playDramaticMusic()'>
             <img src="/assets/breifcase-closed.png" width="140px" />
-            <p class='bag-container_inner-container_number'><span class='hashes'>#</span>15</p>
+            <p class='bag-container_inner-container_number'>15</p>
           </div>
           <div class="bag-container_inner-container" id="sixteen" onclick='playDramaticMusic()'>
             <img src="/assets/breifcase-closed.png" width="140px" />
-            <p class='bag-container_inner-container_number'><span class='hashes'>#</span>16</p>
+            <p class='bag-container_inner-container_number'>16</p>
           </div>
           <button class="reveal-button" onclick="revealSelectedBagValue()" id="reveal-button" disabled> Reveal
             Selected Bag</button>

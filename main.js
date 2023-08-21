@@ -140,15 +140,21 @@ const revealSelectedBagValue = () => {
 
 // * ----------------------------------->> select bag
 const selectBag = (event) => {
-	// remove selected-bag class from all element
 	const selectedBag = document.querySelector('.selected-bag')
+	// play audio
 	const player = document.getElementById('select-audio')
+	// if player is already playing stop it and play again
+	if (player.currentTime > 2) {
+		player.pause()
+	}
+	player.play()
+
+	// remove selected-bag class from all element
 	if (selectedBag) {
 		selectedBag.classList.remove('selected-bag')
 	}
 	// add selected-bag class to the clicked element
 	event.target.classList.add('selected-bag')
-	player.play()
 }
 
 // * ----------------------------------->>  reset game
