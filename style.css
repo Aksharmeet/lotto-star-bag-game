@@ -608,14 +608,19 @@ color: #ffffff;
     opacity: 0;
 }
 .animate-slide-left-end{
-    transition: all 1s ease-in-out;
+    transition: all .3s ease-in-out;
     top: 0;
     opacity: 1;
 }
 
 #show-wins-bg-video {
+    top:0;
     position: fixed;
     z-index: 19;
     object-position: center;
+    transition: all .6s ease-in-out;
+  }
+  .opacity-hidden{
+    opacity: 0;
   }
 /** ----------------- popup-modal: ends ----------------- */

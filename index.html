@@ -98,6 +98,7 @@
   <audio id="default" src="assets/sounds/default.mp3" loop="true"></audio>
   <audio id="dramatic" src="assets/sounds/dramatic.mp3"></audio>
   <audio id="select-audio" src="assets/sounds/select.mp3"></audio>
+  <audio id="reveal-audio" src="assets/sounds/reveal.mp3"></audio>
 
   <div>
     <button onclick="playDefaultMusic()" style="background: rgba(0,0,0,.0); border: 0">
@@ -106,7 +107,7 @@
   </div>
 
   <!-- * show wins -->
-  <video autoplay muted loop id="show-wins-bg-video" class="hidden">
+  <video autoplay muted loop id="show-wins-bg-video" class="opacity-hidden hidden">
     <source src="assets/video/confetti.mp4" type="video/mp4">
     Your browser does not support HTML5 video.
   </video>

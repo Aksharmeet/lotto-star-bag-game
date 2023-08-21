@@ -115,6 +115,10 @@ const revealSelectedBagValue = () => {
 	const player = document.getElementById('show-wins-bg-video')
 	player.play()
 	player.classList.remove('hidden')
+	player.classList.remove('opacity-hidden')
+
+	const audio = document.getElementById('reveal-audio')
+	audio.play()
 
 	// add the value of the selected bag in the  total amount won in local storage
 	const totalAmountWon = localStorage.getItem('totalAmountWon')
@@ -167,6 +171,7 @@ const resetGame = () => {
 		bag.classList.remove('active')
 	})
 	const player = document.getElementById('show-wins-bg-video')
+	player.classList.add('opacity-hidden')
 	setTimeout(() => {
 		player.classList.add('hidden')
 	}, 1000)
